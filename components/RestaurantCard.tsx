@@ -64,10 +64,9 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
           📍 {restaurant.address}
         </p>
 
-        {/* TODO: Workshop Exercise 1 - Add opening hours display */}
-        {/* The data includes openingHours and closingHours fields */}
-        {/* Display them here with appropriate formatting */}
-        {/* Consider showing "Open Now" or "Closed" status */}
+        <p className="text-sm text-gray-600 mb-2">
+          🕒 {formatHours(restaurant.openingHours)} - {formatHours(restaurant.closingHours)}
+        </p>
 
         <p className="text-sm text-gray-500 line-clamp-2">{restaurant.description}</p>
 
@@ -82,6 +81,15 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
       </div>
     </div>
   );
+}
+
+// Helper function to format time from 24-hour to 12-hour format
+function formatHours(time: string): string {
+  const [hours, minutes] = time.split(':');
+  const hour = parseInt(hours, 10);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  return `${displayHour}:${minutes} ${ampm}`;
 }
 
 // Helper function to get cuisine emoji
